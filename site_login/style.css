@@ -1,0 +1,22 @@
+body{
+    background:linear-gradient(to left, red, orange, yellow); 
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.box{
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 20%;
+    position: absolute;
+    max-width: 400px;
+    padding: 10%;
+}
+
+.button{
+    margin: 30px;
+}
