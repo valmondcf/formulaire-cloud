@@ -15,6 +15,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             "password" => $password_hache
         )
     );
-        echo'vous êtes co';
+        echo'vous êtes inscrit';
 }
 ?>

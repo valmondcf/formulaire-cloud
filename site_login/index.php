@@ -14,7 +14,7 @@ if(!isset($_SESSION["user_id"])) {
 
     <body>
         <h1>Welcome <?= htmlspecialchars($_SESSION["user_name"]) ?></h1>
-        <a href="./logout.php"><button>me déconnecter</button></a>
+        <a href="./logout.php" type=button>me déconnecter</button></a>
     </body>
 
 </html>

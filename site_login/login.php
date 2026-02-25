@@ -41,10 +41,9 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){   #Vérifie si le formulaire a été 
             <input type="password" name="password" required />
             <br/>
             <br/>
-            <a href="./inscription.php"><button class="button">je n'ai pas de compte</button></a>
+            <a href="./inscription.php" class="button">je n'ai pas de compte</a>
             <button type="submit">confirmer</button>
         </form>
     </div>
     </body>
-
 </html>

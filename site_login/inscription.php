@@ -18,7 +18,7 @@
             <input type="password" name="password" placeholder="Entrez votre mot de passe..." required />
             <br/>
             <br/>
-            <a href="./login.php"><button class="button">j'ai déjà un compte</button></a>
+            <a href="./login.php" class="button">j'ai déjà un compte</a>
             <button type="submit">m'inscrire</button>
         </form>
     </div>
