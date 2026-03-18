@@ -7,7 +7,10 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     $password = $_POST['password'];
     $password_hache=password_hash($password, PASSWORD_DEFAULT);
 
-    $requete = $pdo->prepare("INSERT INTO users VALUES (0, :name, :mail, :password)");
+   $requete = $pdo->prepare("
+        INSERT INTO users (name, mail, password)
+        VALUES (:name, :mail, :password)
+");
     $requete->execute(
         array(
             "name" => $name,

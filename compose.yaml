@@ -1,16 +1,22 @@
-version: '3.8'
+# La version du langage dans le fichier est obsolète maintenant
+# version: '3.8'
 
 services:
-  my_mysql:
+  # Renommé pour cohérence
+  mysql:
     image: mysql:8.0
-    container_name: my_mysql
+    # Par défaut les conteneurs seront nommés : repertoire_services_NUM
+    # Les nommer à la main avec un nom différent du service peut porter à confusion
+    # container_name: my_mysql
     environment:
       MYSQL_ROOT_PASSWORD: root123
       MYSQL_DATABASE: formulaire_db
       MYSQL_USER: user
       MYSQL_PASSWORD: password
+    # Je change les ports car chez moi j'ai des trucs qui tournent sur ces ports
+    # Tu pourras changer à nouveau
     ports:
-      - "3307:3306"
+      - "3366:3306"
     volumes:
       - ./init-db:/docker-entrypoint-initdb.d
     networks:
@@ -19,16 +25,19 @@ services:
 
   php:
     build: .
-    container_name: my_php
+    # Idem
+    # container_name: my_php
+    # Idem pour les ports
     ports:
-      - "80:80"
+      - "8008:80"
     volumes:
       - ./site_login:/var/www/html
     environment:
+      # Ici c'est ok... on peut utiliser le nom de service pour nommer une machine
       MYSQL_HOST: mysql
       MYSQL_USER: user
       MYSQL_PASSWORD: password
-      MYSQL_DATABASE: db
+      MYSQL_DATABASE: formulaire_db
     networks:
       - my_network
     restart: unless-stopped
@@ -42,7 +51,7 @@ services:
       #PMA_PASSWORD: password
       PMA_PORT: 3306
     ports:
-      - "8080:80"
+      - "8009:80"
     depends_on:
       - mysql
     networks:
