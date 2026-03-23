@@ -19,6 +19,7 @@ services:
       - "3366:3306"
     volumes:
       - ./init-db:/docker-entrypoint-initdb.d
+      - db_data:/var/lib/mysql
     networks:
       - my_network
     restart: unless-stopped
@@ -31,7 +32,7 @@ services:
     ports:
       - "8008:80"
     volumes:
-      - ./site_login:/var/www/html
+      - .:/var/www/html
     environment:
       # Ici c'est ok... on peut utiliser le nom de service pour nommer une machine
       MYSQL_HOST: mysql
@@ -58,7 +59,7 @@ services:
       - my_network
     restart: unless-stopped
 
-volumes:
+volumes:          
   db_data:
 
 networks:

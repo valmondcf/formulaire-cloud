@@ -1,19 +1,18 @@
 <?php
-// modifié
 $host = "mysql";
 $dbname = "formulaire_db";
-$user = "root";
+$db_user = "root";
 $pass = "root123";
 
 try {
     $pdo = new PDO(
-        // modifié
         "mysql:host=$host;dbname=$dbname;charset=utf8mb4",
-        $user,
+        $db_user,
         $pass,
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
     );
 } catch (PDOExeption $e) {
+    echo 'Erreur : Impossible de se connecter à la BDD';
     die("Connection error : " . $e->getMessage());
 }
 

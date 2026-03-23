@@ -1,0 +1,35 @@
+<html>
+    <head>
+    </head>
+    <body>
+         <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="navbar-nav">
+                        <?php
+                            if(!isset($_SESSION['id'])){
+                        ?>
+                        <a class="nav-link" href="./inscription.php">Inscription</a>
+                        <a class="nav-link" href="./connexion.php">Connexion</a>
+                        <?php
+                            }else{
+                        ?>
+                        <a class="nav-link active" aria-current="page" href="/">Accueil</a>
+                        <a class="nav-link" href="./membres.php">Membres</a>
+                        <a class="nav-link" href="./logout.php">Déconnexion</a>
+                        <?php
+                            }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </body>
+</html>    
+    
+    
+    
+    
