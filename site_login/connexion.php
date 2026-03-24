@@ -2,10 +2,6 @@
 session_start();
 require "../init-db/db.php"; 
 
-if(isset($_SESSION['id'])){
-    header('Location: /');
-    exit;
-}
     $valid = (boolean) true;
 
 if($_SERVER["REQUEST_METHOD"] === "POST"){

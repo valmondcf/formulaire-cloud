@@ -12,14 +12,15 @@
                         <?php
                             if(!isset($_SESSION['id'])){
                         ?>
-                        <a class="nav-link" href="./inscription.php">Inscription</a>
-                        <a class="nav-link" href="./connexion.php">Connexion</a>
+                        <a class="nav-link" href="/site_login/inscription.php">Inscription</a>
+                        <a class="nav-link" href="/site_login/connexion.php">Connexion</a>
                         <?php
                             }else{
                         ?>
                         <a class="nav-link active" aria-current="page" href="/">Accueil</a>
-                        <a class="nav-link" href="./membres.php">Membres</a>
-                        <a class="nav-link" href="./logout.php">Déconnexion</a>
+                        <a class="nav-link" href="/profil/profil.php">Mon Profil</a>
+                        <a class="nav-link" href="/profil/membres.php">Membres</a>
+                        <a class="nav-link" href="/site_login/logout.php">Déconnexion</a>
                         <?php
                             }
                         ?>

@@ -2,10 +2,10 @@
 session_start();
 require "../init-db/db.php";
 
-if(isset($_SESSION['id'])) {                    // si connecté
+if(isset($_SESSION['id'])) {
     $var = "Ravi de vous revoir " . $_SESSION['name'];
-} else {                                         // si PAS connecté
-    $var = "Bienvenue";
+} else {
+    header("Location: /site_login/connexion.php");
     exit;
 }
 ?>

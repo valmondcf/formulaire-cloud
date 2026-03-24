@@ -5,7 +5,7 @@ CREATE TABLE users (
     name VARCHAR(100) NOT NULL,
     mail VARCHAR(150) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    role ENUM('user', 'admin', 'moderateur', 'superadmin') NOT NULL DEFAULT 'user',
+    role TINYINT NOT NULL DEFAULT 0,
     date_creation TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     date_connexion TIMESTAMP NULL DEFAULT NULL,
     desactive TIMESTAMP DEFAULT NULL

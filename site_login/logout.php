@@ -1,8 +1,10 @@
 <?php
 session_start();
-
+session_unset(); 
 session_destroy();
 
-header("Location: ./connexion.php");
+setcookie(session_name(), '', time() - 3600, '/');
+
+header("Location: /site_login/connexion.php");
 exit;
 ?>

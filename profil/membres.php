@@ -23,13 +23,14 @@
 
     <html>
     <head>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.rtl.min.css"
-         integrity="sha384-CfCrinSRH2IR6a4e6fy2q6ioOX7O6Mtm1L9vRvFZ1trBncWmMePhzvafv7oIcWiW" crossorigin="anonymous">
+        <?php
+            require_once('../head/link.php');
+        ?>
         <title>Membres</title>
     </head>
     <body>
         <?php
-            require_once('./menu.php');
+            require_once('../site_login/menu.php');
         ?>
         <div class="container">
             <div class="row">
