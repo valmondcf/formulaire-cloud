@@ -19,7 +19,8 @@
                         ?>
                         <a class="nav-link active" aria-current="page" href="/">Accueil</a>
                         <a class="nav-link" href="/profil/profil.php">Mon Profil</a>
-                        <a class="nav-link" href="/profil/membres.php">Membres</a>
+                        <a class="nav-link" href="/profil/membres.php">Personnages</a>
+                        <a class="nav-link" href="/profil/membres.php">Membres du forum</a>
                         <a class="nav-link" href="/site_login/logout.php">Déconnexion</a>
                         <?php
                             }
