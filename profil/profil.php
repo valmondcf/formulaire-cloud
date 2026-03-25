@@ -64,6 +64,9 @@
                     <div>
                         Rôle utilisateur : <?= $role ?>
                     </div>
+                    <div>
+                        <a href="/profil/edit-profil.php">Modifier le compte</a>
+                    </div>
                 </div>
             </div>
         </div>

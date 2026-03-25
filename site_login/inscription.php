@@ -74,7 +74,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     } elseif($password <> $confpass) {
         $valid = false;
         $err_password = "Le mot de passe est différent de la confirmation";
-
     } 
 
     if($valid){
