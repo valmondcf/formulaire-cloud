@@ -1,0 +1,20 @@
+body {
+    background-image: url("/media/circus.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+.navbar {
+    background-color: rgba(80, 0, 120, 0.5) !important;
+}
+
+.navbar .nav-link {
+    color: white !important;
+}
+
+.navbar .nav-link:hover {
+    color: rgba(255, 255, 255, 0.7) !important;
+}

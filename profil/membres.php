@@ -43,7 +43,7 @@
                 <div class="col-3">
                     <div><?= $rm['name'] ?></div>
                     <div>
-                        <a href="voir-profil.php?id<?= $rm['id']?>">Voir profil</a>
+                        <a href="/profil/voir_profil.php?id=<?= $rm['id']?>">Voir profil</a>
                     </div>
                 </div>
                 <?php

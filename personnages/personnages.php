@@ -2,21 +2,9 @@
     session_start();
     require "../init-db/db.php"; 
 
-    $req_sql = "SELECT id, name
-        FROM users";
-    
-    if(isset($_SESSION['id'])){
-        $req_sql .= " WHERE id <> ?";
-    }
-
+    $req_sql = "SELECT id, name, avatar_url, species, status FROM characters";
     $requete = $pdo->prepare($req_sql);
-
-    if(isset($_SESSION['id'])){
-        $requete->execute([$_SESSION['id']]);
-    }else{
-        $requete->execute();
-    }
-
+    $requete->execute();
     $req_membres= $requete->fetchAll();
 
 ?>
@@ -26,7 +14,7 @@
         <?php
             require_once('../head/link.php');
         ?>
-        <title>Membres du forum</title>
+        <title>liste des Personnages</title>
     </head>
     <body>
         <?php
@@ -35,7 +23,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h1>Membres du forum</h1>
+                    <h1>Personnages</h1>
                 </div>
                 <?php
                     foreach($req_membres as $rm){
@@ -43,7 +31,7 @@
                 <div class="col-3">
                     <div><?= $rm['name'] ?></div>
                     <div>
-                        <a href="voir-profil.php?id<?= $rm['id']?>">Voir profil</a>
+                        <a href="profil_perso.php?id<?= $rm['id']?>">Voir personnage</a>
                     </div>
                 </div>
                 <?php
