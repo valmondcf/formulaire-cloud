@@ -137,7 +137,7 @@ Modifier le
             <div class="row">
                 <div class="col-3"></div>
                 <div class="col-6">
-                    <h1>Modifier les informations</h1>
+                    <h1>Modifier l'email</h1>
                     <form method="post">
                         <div class="mb-3">
                             <?php if(isset($err_mail)){ echo '<div>' . $err_mail . '</div>'; }?>
@@ -147,8 +147,8 @@ Modifier le
                             <input class="btn btn-primary" type="submit" name="form1" value="Modifier" />
                         </div>
                     </form>
-Modifier le
                     <br/>
+                    <h1>Modifier le mot de passe</h1>
                     <form method="post">
                         <div class="mb-3">
                             <?php if(isset($err_password)){ echo '<div>' . $err_password . '</div>'; }?>
@@ -167,6 +167,7 @@ Modifier le
                 </div>
             </div>
         </div>
+        <script src="/cain.js"></script>
+        <script src="/caine_tadc__1_.glb"></script>
     </body>
 </html>
-Modifier le

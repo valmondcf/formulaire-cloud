@@ -23,6 +23,7 @@ CREATE TABLE characters (
     birthday DATE,
     avatar_url VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    door_url VARCHAR(255),
 );
 
 CREATE TABLE character_details (
