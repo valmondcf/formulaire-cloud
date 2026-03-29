@@ -269,6 +269,6 @@ foreach ($tous as $i => $t) {
 
 </div>
 
-<script src="/cain.js"></script>
+  <script src="/caine/caine.js"></script>
 </body>
 </html>

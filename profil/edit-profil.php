@@ -128,7 +128,6 @@
         ?>
         <title>Modifier le compte</title>
     </head>
-Modifier le
     <body>
         <?php
             require_once('../site_login/menu.php');
@@ -167,7 +166,6 @@ Modifier le
                 </div>
             </div>
         </div>
-        <script src="/cain.js"></script>
-        <script src="/caine_tadc__1_.glb"></script>
+        <script src="/caine/caine.js"></script>
     </body>
 </html>
