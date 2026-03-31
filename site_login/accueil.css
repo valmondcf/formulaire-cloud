@@ -1,20 +1,167 @@
-body {
-    background-image: url("/media/circus.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    min-height: 100vh;
-}
+        body {
+            background-image: url("/media/outside.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        .navbar {
+            background-color: rgba(80, 0, 120, 0.5) !important;
+        }
+        .navbar .nav-link {
+            color: white !important;
+        }
+        .navbar .nav-link:hover {
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+        .welcome-title {
+            color: #ffe600;
+            font-size: 2rem;
+            font-weight: bold;
+            text-shadow: 0 0 20px #ffe60080;
+            text-align: center;
+            margin: 30px 0 10px;
+        }
 
-.navbar {
-    background-color: rgba(80, 0, 120, 0.5) !important;
-}
+        /* PORTES NAVIGATION */
+        .door-nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+        .door-nav-item {
+            text-align: center;
+            transition: transform 0.2s;
+            text-decoration: none;
+        }
+        .door-nav-item:hover {
+            transform: scale(1.07);
+        }
+        .door-nav-item img {
+            width: 180px;
+            border-radius: 12px;
+            display: block;
+            margin: 0 auto;
+        }
+        .door-nav-label {
+            color: #ffe600;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 8px;
+            text-shadow: 0 0 8px #ffe60060;
+        }
 
-.navbar .nav-link {
-    color: white !important;
-}
+        /* SECTIONS */
+        .section-title {
+            color: #ffe600;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-shadow: 0 0 12px #ffe60060;
+            border-left: 4px solid #ff2d78;
+            padding-left: 12px;
+            margin-bottom: 16px;
+        }
+        .section-box {
+            background: rgba(15, 0, 35, 0.85);
+            border: 2px solid #6a0dad;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
 
-.navbar .nav-link:hover {
-    color: rgba(255, 255, 255, 0.7) !important;
-}
+        /* ANNONCES */
+        .annonce-item {
+            border-bottom: 1px solid #6a0dad;
+            padding: 12px 0;
+        }
+        .annonce-item:last-child {
+            border-bottom: none;
+        }
+        .annonce-titre {
+            color: #ff2d78;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .annonce-contenu {
+            color: #fff8f0;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+        .annonce-meta {
+            color: #aaa;
+            font-size: 11px;
+            margin-top: 4px;
+        }
+        .no-content {
+            color: #aaa;
+            font-size: 13px;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        /* TOPICS */
+        .topic-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #6a0dad;
+            padding: 10px 0;
+        }
+        .topic-item:last-child {
+            border-bottom: none;
+        }
+        .topic-titre {
+            color: #00e5cc;
+            font-weight: bold;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        .topic-titre:hover {
+            color: #ffe600;
+        }
+        .topic-meta {
+            color: #aaa;
+            font-size: 11px;
+            text-align: right;
+        }
+
+        .welcome-title {
+        background: linear-gradient(135deg, #6a0dad, #ff2d78);
+        color: #ffe600;
+        font-size: 2rem;
+        font-weight: bold;
+        text-shadow: 0 0 20px #ffe60080;
+        text-align: center;
+        padding: 16px 0;
+        margin: 30px 0 10px;
+        width: 100%;
+        }
+
+        .welcome-sub {
+        color: #c0af19;
+        text-align: center;
+        letter-spacing: 3px;
+        font-size: 30px;
+        margin-bottom: 40px;
+        }
+
+        .door-nav-item .btn-voir {
+        background: linear-gradient(135deg, #6a0dad, #ff2d78);
+        border: none;
+        border-radius: 20px;
+        padding: 8px 20px;
+        color: white;
+        font-size: 13px;
+        text-decoration: none;
+        display: inline-block;
+        transition: opacity 0.2s;
+        margin-top: 10px;
+        }
+
+        .door-nav-item .btn-voir:hover {
+        opacity: 0.85;
+        color: white;
+        }

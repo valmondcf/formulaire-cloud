@@ -34,8 +34,8 @@ body {
     margin-bottom: 8px;
 }
 .page-subtitle {
-    color: #00e5cc;
-    font-size: 13px;
+    color: #9c0909;
+    font-size: 30px;
     letter-spacing: 3px;
     margin-bottom: 28px;
 }
@@ -77,6 +77,7 @@ body {
     color: white;
     text-decoration: none;
 }
+
 </style>
 </head>
 <body>

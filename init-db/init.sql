@@ -86,3 +86,15 @@ CREATE TABLE commentaires (
         REFERENCES users(id)
         ON DELETE CASCADE
 );
+
+CREATE TABLE annonces (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    titre VARCHAR(255) NOT NULL,
+    contenu TEXT,
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_users INT NOT NULL,
+    CONSTRAINT fk_annonce_user
+        FOREIGN KEY (id_users)
+        REFERENCES users(id)
+        ON DELETE CASCADE
+);
