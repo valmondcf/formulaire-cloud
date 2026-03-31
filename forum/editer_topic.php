@@ -7,6 +7,27 @@ if(!isset($_SESSION['id'])){
     exit;
 }
 
+if(!isset($_GET['id'])){
+    header('Location: /forum/forum.php');
+    exit;
+}
+
+$get_id_topic = (int) $_GET['id'];
+
+if($get_id_topic <= 0){
+    header('Location: /forum/forum.php');
+    exit;
+}
+
+$req = $pdo->prepare("SELECT t.*, f.titre AS titre_forum FROM topic t INNER JOIN forum f ON f.id = t.id_forum WHERE t.id = ? ");
+$req->execute([$get_id_topic]);
+$req_topic = $req->fetch();
+
+if(!isset($req_topic['id'])){
+    header('Location: /forum/forum.php');
+    exit;
+}
+
 $req = $pdo->prepare("SELECT id, titre FROM forum");
 $req->execute();
 $req_forum = $req->fetchAll();
@@ -16,7 +37,7 @@ if(!empty($_POST)){
 
     $valid = true;
 
-    if(isset($_POST['creation'])){
+    if(isset($_POST['modification'])){
 
         $titre = (String) ucfirst(trim($titre));
         $categorie = (int) $categorie;
@@ -28,7 +49,7 @@ if(!empty($_POST)){
     
         }elseif(mb_strlen($titre) < 3){
             $valid = false;
-            $err_titre = "Le titre doit faire plus de 2 caractères";
+            $err_titre = "Le titre doit faire plus de 5 caractères";
         }elseif(mb_strlen($titre) > 50){
             $valid = false;
             $err_titre = "Le titre doit faire moins de 51 caractères (" . mb_strlen($titre) . "/50)";
@@ -57,20 +78,13 @@ if(!empty($_POST)){
 
         if($valid){
 
-            $date_creation = date('Y-m-d H:i:s');
+            $date_modification = date('Y-m-d H:i:s');
 
-            $req = $pdo->prepare("INSERT INTO topic (id_forum, titre, contenu, date_creation, date_modification, id_users) VALUES (?,?,?,?,?,?)");
+            $req = $pdo->prepare("UPDATE topic SET id_forum = ?, titre = ?, contenu = ?, date_modification = ? WHERE id = ?");
 
-            $req->execute([$req_forum_verif['id'], $titre, $contenu, $date_creation, $date_creation, $_SESSION['id']]);
+            $req->execute([$req_forum_verif['id'], $titre, $contenu, $date_modification, $req_topic['id']]);
 
-            $UID = (int) $pdo->lastInsertId();
-
-            if($UID >= 0){
-                header('Location: topic.php?id=' . $UID);
-            }else{
-                header('Location: forum.php');
-            }
-            
+            header('Location: topic.php?id=' . $req_topic['id']);
             exit;
         }
     }
@@ -85,19 +99,19 @@ if(!empty($_POST)){
         <?php
             require_once('../head/link.php');
         ?>
-        <title>Créer une topic</title>
+        <title>Éditer mon topic</title>
     </head>
     <body>
         <?php
             require_once('../site_login/menu.php');
         ?>
     <div class="box">
+        <h1>Éditer mon topic</h1>
         <form method="post">
-            <h1>Créer une topic</h1>
             <label>Titre</label>
             <br/>
             <?php if(isset($err_titre)){ echo '<div>' . $err_titre . '</div>'; }?>
-            <input type="text" name="titre" value="<?php if(isset($titre)){ echo $titre; }?>" placeholder="Titre de votre topic"/>
+            <input type="text" name="titre" value="<?php if(isset($titre)){ echo $titre; }else{ echo $req_topic['titre']; }?>" placeholder="Titre de votre topic"/>
             <br/>
             <br/>
             <?php if(isset($err_cat)){ echo '<div>' . $err_cat . '</div>'; }?>
@@ -109,6 +123,10 @@ if(!empty($_POST)){
                 if(isset($categorie)){
             ?>
             <option value="<?= $req_forum_verif['id'] ?>"><?= $req_forum_verif['titre'] ?></option>
+            <?php
+                }elseif(isset($req_topic['id_forum'])){
+            ?>
+            <option value="<?= $req_topic['id_forum'] ?>"><?= $req_topic['titre_forum'] ?></option>
             <?php
                 }else{
             ?>
@@ -128,10 +146,10 @@ if(!empty($_POST)){
             <br/>
             <?php if(isset($err_contenu)){ echo '<div>' . $err_contenu . '</div>'; }?>
             <label>Contenu</label>
-            <textarea type="text" name="contenu" placeholder="Votre topic..."><?php if(isset($contenu)){ echo $contenu; }?></textarea>
+            <textarea type="text" name="contenu" placeholder="Votre topic..."><?php if(isset($contenu)){ echo $contenu; } else{ echo $req_topic['contenu']; } ?></textarea>
             <br/>
             <br/>
-            <button type="submit" name="creation">Créer mon topic</button>
+            <button type="submit" name="modification">Modifier mon topic</button>
         </form>
     </div>
         <script src="/caine/caine.js"></script>
