@@ -42,3 +42,47 @@ CREATE TABLE character_details (
         REFERENCES characters(id)
         ON DELETE CASCADE
 );
+
+CREATE TABLE forum (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    titre VARCHAR(100) NOT NULL,
+    libelle VARCHAR(100),
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ordre INT
+);
+
+CREATE TABLE topics (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_forum INT NOT NULL,
+    titre VARCHAR(255) NOT NULL,
+    contenu TEXT,
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    date_modification TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    id_users INT NOT NULL,
+    statut TINYINT DEFAULT 0,
+    CONSTRAINT fk_topic_forum
+        FOREIGN KEY (id_forum)
+        REFERENCES forum(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_topic_user
+        FOREIGN KEY (id_users)
+        REFERENCES users(id)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE commentaires (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_topic INT NOT NULL,
+    id_users INT NOT NULL,
+    contenu TEXT,
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    date_modification TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_comment_topic
+        FOREIGN KEY (id_topic)
+        REFERENCES topics(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_comment_user
+        FOREIGN KEY (id_users)
+        REFERENCES users(id)
+        ON DELETE CASCADE
+);
