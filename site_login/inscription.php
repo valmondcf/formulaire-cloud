@@ -118,7 +118,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             <br/>
             <label>Confirmation du mail</label>
             <br/>
-            <input type="email" name="confmail" value="" placeholder="Confirmez votre mail" required/>
+            <input type="email" name="confmail" value=""<?php if(isset($confmail)){ echo $confmail; }?>placeholder="Confirmez votre mail" required/>
             <br/>
             <br/>
             <label>mot de passe</label>

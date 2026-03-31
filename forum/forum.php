@@ -26,6 +26,12 @@
                 <div class="col-12">
                     <h1>Forum</h1>
                 </div>
+                </br>
+                <div>
+                    <a href="/forum/create_topic.php">Créer une topic</a>
+                </div>
+                </br>
+                </br>
                 <?php
                     foreach($req_forum as $rf){
                 ?> 
