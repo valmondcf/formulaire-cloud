@@ -1,151 +1,196 @@
 <?php
-    session_start();
-    require "../init-db/db.php"; 
+session_start();
+require "../init-db/db.php"; 
 
-    if(!isset($_GET['id'])){
-        header('Location: /forum/forum.php');
-        exit;
-    }
+if(!isset($_GET['id'])){
+    header('Location: /forum/forum.php');
+    exit;
+}
 
-    $get_id_topic = (int) $_GET['id'];
+$get_id_topic = (int) $_GET['id'];
 
-    if($get_id_topic <= 0){
-        header('Location: /forum/forum.php');
-        exit;
-    }
+if($get_id_topic <= 0){
+    header('Location: /forum/forum.php');
+    exit;
+}
 
-    $requete = $pdo->prepare("SELECT t.*, u.name, f.titre AS titre_forum FROM topic t INNER JOIN users u ON u.id = t.id_users INNER JOIN forum f ON f.id = t.id_forum WHERE t.id = ? ORDER BY t.date_creation DESC");
-    $requete->execute([$get_id_topic]);
-    $req_topic = $requete->fetch();
+$requete = $pdo->prepare("SELECT t.*, u.name, f.titre AS titre_forum FROM topic t INNER JOIN users u ON u.id = t.id_users INNER JOIN forum f ON f.id = t.id_forum WHERE t.id = ? ORDER BY t.date_creation DESC");
+$requete->execute([$get_id_topic]);
+$req_topic = $requete->fetch();
 
-    if(!isset($req_topic['id'])){
-        header('Location: /forum/forum.php');
-        exit;
-    }
+if(!isset($req_topic['id'])){
+    header('Location: /forum/forum.php');
+    exit;
+}
 
-    $req = $pdo->prepare("SELECT tc.*, u.name FROM topic_commentaire tc INNER JOIN users u ON u.id = tc.id_users WHERE tc.id_topic = ? ORDER BY tc.date_creation DESC");
-    $req->execute([$req_topic['id']]);
-    $req_topic_commentaire = $req->fetchAll();
+$req = $pdo->prepare("SELECT tc.*, u.name FROM topic_commentaire tc INNER JOIN users u ON u.id = tc.id_users WHERE tc.id_topic = ? ORDER BY tc.date_creation DESC");
+$req->execute([$req_topic['id']]);
+$req_topic_commentaire = $req->fetchAll();
 
-    if(!empty($_POST)){
+if(!empty($_POST)){
     extract($_POST);
-
     $valid = true;
 
     if(isset($_POST['poster'])){
-
         $commentaire = (String) trim($commentaire);
 
         if(empty($commentaire)){
-        $valid = false;
-        $err_commentaire = "Ce champ ne peut pas être vide";
-    
-        }elseif(mb_strlen($commentaire) < 3){
+            $valid = false;
+            $err_commentaire = "Ce champ ne peut pas être vide";
+        } elseif(mb_strlen($commentaire) < 3){
             $valid = false;
             $err_commentaire = "Le titre doit faire plus de 5 caractères";
         }
 
-        if($valid){
-
+        if($valid && isset($_SESSION['id'])){
             $date_creation = date('Y-m-d H:i:s');
             $req = $pdo->prepare("INSERT INTO topic_commentaire (id_topic, id_users, contenu, date_creation, date_modification) VALUES (?,?,?,?,?)");
             $req->execute([$req_topic['id'], $_SESSION['id'], $commentaire, $date_creation, $date_creation]);
-
             header('Location: topic.php?id=' . $req_topic['id']);
             exit;
         }
-    }
-    }
 
+    } elseif(isset($_POST['supp_com'])){
+        $id_com = (int) $id_com;
+
+        if($id_com <= 0){
+            $valid = false;
+            $err_commentaire = "Impossible de supprimer ce commentaire";
+        } else {
+            $req = $pdo->prepare("SELECT id FROM topic_commentaire WHERE id = ? AND id_users = ?");
+            $req->execute([$id_com, $_SESSION['id']]);
+            $req_verif_com = $req->fetch();
+
+            if(!isset($req_verif_com['id'])){
+                $valid = false;
+                $err_commentaire = "Impossible de supprimer ce commentaire";
+            }
+        }
+
+        if($valid && isset($_SESSION['id'])){
+            $req = $pdo->prepare("DELETE FROM topic_commentaire WHERE id = ?");
+            $req->execute([$req_verif_com['id']]);
+            header('Location: topic.php?id=' . $req_topic['id']);
+            exit;
+        }
+
+    } elseif(isset($_POST['supp_topic'])){
+        if($_SESSION['id'] <> $req_topic['id_users']){
+            $valid = false;
+            $err_topic = "Impossible de supprimer ce topic";
+        }
+
+        if($valid && isset($_SESSION['id'])){
+
+            $req = $pdo->prepare("DELETE FROM topic_commentaire WHERE id_topic = ?");
+            $req->execute([$req_topic['id']]);
+
+            $req = $pdo->prepare("DELETE FROM topic WHERE id = ?");
+            $req->execute([$req_topic['id']]);
+            header('Location: /forum/forum.php');
+            exit;
+        }
+    }
+}
 ?>
 
-    <html>
-    <head>
-        <?php
-            require_once('../head/link.php');
-        ?>
-        <title><?= $req_topic['titre'] ?></title>
-    </head>
-    <body>
-        <?php
-            require_once('../site_login/menu.php');
-        ?>
-        <div class="container">
-            <div class="row">
-                <div class="col-3"></div>
-                <div class="col-6">
-                    <h1><?= $req_topic['titre'] ?></h1>
-                </div>
-                <div class="col-3"></div>
-                <div class="col-3"></div>
-                <div class="col-6">
-                    <div>
-                        <a href="/forum/editer_topic.php?id=<?= $req_topic['id']?>">Éditer mon topic</a>
-                    </div>
-                    </br>
-                    </br>
-                    <div><?= nl2br($req_topic['contenu']) ?></div>
-                    </br>
-                    <div>Écrit par <?= $req_topic['name'] ?>
-                    <div>Catégorie : <?= $req_topic['titre_forum'] ?></div>
-                    <div>Le <?= date_format(date_create($req_topic['date_creation']), "d/m/Y à H:i") ?></div>
-                    <?php
-                        if($req_topic['date_creation'] < $req_topic['date_modification']){
-                    ?>
-                    <div>Modifié le <?= date_format(date_create($req_topic['date_modification']), "d/m/Y à H:i") ?></div>
-                    <?php
-                        }
-                    ?>
-                </div>
-                <div class="col-3"></div>
-                <div class="col-3"></div>
-                <div class="col-6"></div>
-                    </br>
-                    <h1>Commentaires</h1>
-                <div class="col-3"></div>
-                <div class="col-3"></div>
-                <div class="col-6">
-                    <br>
+<html>
+<head>
+    <?php require_once('../head/link.php'); ?>
+    <title><?= $req_topic['titre'] ?></title>
+</head>
+<body>
+    <?php require_once('../site_login/menu.php'); ?>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-3"></div>
+            <div class="col-6">
+                <h1><?= $req_topic['titre'] ?></h1>
+            </div>
+            <div class="col-3"></div>
+
+            <div class="col-3"></div>
+            <div class="col-6">
+                <?php if(isset($err_topic)){ echo '<div>' . $err_topic . '</div>'; } ?>
+
+                <?php if(isset($_SESSION['id']) && $_SESSION['id'] == $req_topic['id_users']): ?>
+                <div>
                     <form method="post">
                         <div class="mb-3">
-                            <?php if(isset($err_commentaire)){ echo '<div>' . $err_commentaire . '</div>'; }?>
-                            <label>Votre commentaire</label>
-                            <textarea type="text" name="commentaire" placeholder="Votre commentaire..."><?php if(isset($commentaire)){ echo $commentaire; }?></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <button type="submit" name="poster" class="btn btn-primary">Poster</button>
+                            <input type="submit" name="supp_topic" value="Supprimer mon topic" class="btn btn-primary" />
                         </div>
                     </form>
                 </div>
-                <div class="col-3"></div>
-                <?php
-                    foreach($req_topic_commentaire as $rtc){
-                ?>
-                </br>
-                <div class="col-3"></div>
-                <div class="col-6">
-                    </br>
-                    <div><?= nl2br($rtc['contenu']) ?></div>
-                    </br>
-                    <div>Écrit par <?= $rtc['name'] ?>
-                    <div>
-                        <a href="/forum/editer_commentaire.php?id=<?=$rtc['id'] ?>">Éditer mon commentaire</a>
-                    </div>
-                    <div>Le <?= date_format(date_create($rtc['date_creation']), "d/m/Y à H:i") ?></div>
-                    <?php
-                        if($rtc['date_creation'] < $rtc['date_modification']){
-                    ?>
-                    <div>Modifié le <?= date_format(date_create($rtc['date_modification']), "d/m/Y à H:i") ?></div>
-                    <?php
-                        }
-                    ?>
+                <div>
+                    <a href="/forum/editer_topic.php?id=<?= $req_topic['id'] ?>">Éditer mon topic</a>
                 </div>
-                <div class="col-3"></div>
-                <?php
-                    }
-                ?>
+                <?php endif; ?>
+
+                <br><br>
+                <div><?= nl2br($req_topic['contenu']) ?></div>
+                <br>
+                <div>Écrit par <?= $req_topic['name'] ?></div>
+                <div>Catégorie : <?= $req_topic['titre_forum'] ?></div>
+                <div>Le <?= date_format(date_create($req_topic['date_creation']), "d/m/Y à H:i") ?></div>
+
+                <?php if($req_topic['date_creation'] < $req_topic['date_modification']): ?>
+                <div>Modifié le <?= date_format(date_create($req_topic['date_modification']), "d/m/Y à H:i") ?></div>
+                <?php endif; ?>
             </div>
+            <div class="col-3"></div>
+
+            <div class="col-3"></div>
+            <div class="col-6">
+                <br>
+                <h1>Commentaires</h1>
+                <br>
+                <form method="post">
+                    <div class="mb-3">
+                        <?php if(isset($err_commentaire)){ echo '<div>' . $err_commentaire . '</div>'; } ?>
+                        <label>Votre commentaire</label>
+                        <textarea name="commentaire" placeholder="Votre commentaire..."><?php if(isset($commentaire)){ echo $commentaire; } ?></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" name="poster" class="btn btn-primary">Poster</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-3"></div>
+
+            <?php foreach($req_topic_commentaire as $rtc): ?>
+            <div class="col-3"></div>
+            <div class="col-6">
+                <br>
+                <div><?= nl2br($rtc['contenu']) ?></div>
+                <br>
+                <div>Écrit par <?= $rtc['name'] ?></div>
+
+                <?php if(isset($_SESSION['id']) && $_SESSION['id'] == $rtc['id_users']): ?>
+                <div>
+                    <form method="post">
+                        <div class="mb-3">
+                            <input type="submit" name="supp_com" value="Supprimer mon commentaire" class="btn btn-primary" />
+                            <input type="hidden" name="id_com" value="<?= $rtc['id'] ?>" />
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <a href="/forum/editer_commentaire.php?id=<?= $rtc['id'] ?>">Éditer mon commentaire</a>
+                </div>
+                <?php endif; ?>
+
+                <div>Le <?= date_format(date_create($rtc['date_creation']), "d/m/Y à H:i") ?></div>
+
+                <?php if($rtc['date_creation'] < $rtc['date_modification']): ?>
+                <div>Modifié le <?= date_format(date_create($rtc['date_modification']), "d/m/Y à H:i") ?></div>
+                <?php endif; ?>
+            </div>
+            <div class="col-3"></div>
+            <?php endforeach; ?>
+
         </div>
-        <script src="/caine/caine.js"></script>
-    </body>
+    </div>
+    <script src="/caine/caine.js"></script>
+</body>
 </html>

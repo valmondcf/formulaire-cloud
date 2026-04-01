@@ -28,6 +28,11 @@ if(!isset($req_topic_commentaire['id'])){
     exit;
 }
 
+if($req_topic_commentaire['id_users'] <> $_SESSION['id']){
+    header('Location: topic.php?id=' . $req_topic_commentaire['id_topic']);
+    exit;
+}
+
 if(!empty($_POST)){
     extract($_POST);
 

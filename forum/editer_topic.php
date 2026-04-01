@@ -28,6 +28,11 @@ if(!isset($req_topic['id'])){
     exit;
 }
 
+if($req_topic['id_users'] <> $_SESSION['id']){
+    header('Location: topic.php?id=' . $req_topic['id']);
+    exit;
+}
+
 $req = $pdo->prepare("SELECT id, titre FROM forum");
 $req->execute();
 $req_forum = $req->fetchAll();
