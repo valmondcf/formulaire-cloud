@@ -98,6 +98,7 @@ if(!empty($_POST)){
 <head>
     <?php require_once('../head/link.php'); ?>
     <title><?= $req_topic['titre'] ?></title>
+    <link rel="stylesheet" href="/css/forum.css">
 </head>
 <body>
     <?php require_once('../site_login/menu.php'); ?>

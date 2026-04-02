@@ -2,7 +2,7 @@
     session_start();
     require "../init-db/db.php"; 
 
-    $req_sql = "SELECT id, name
+    $req_sql = "SELECT id, name, avatar
         FROM users";
     
     if(isset($_SESSION['id'])){
@@ -39,9 +39,20 @@
                 </div>
                 <?php
                     foreach($req_membres as $rm){
+
+                        $chemin_avatar = null;
+
+                        if(!empty($rm['avatar'])){
+                            $chemin_avatar = '/public/pp/' . $rm['id'] . '/'  . $rm['avatar'];
+                        }else{
+                            $chemin_avatar = '/public/pp/defaut/defaut.png';
+                        }
                 ?> 
                 <div class="col-3">
                     <div><?= $rm['name'] ?></div>
+                    <div>
+                        <img src="<?= $chemin_avatar ?>" class ="profil_pp"/>
+                    </div>
                     <div>
                         <a href="/profil/voir_profil.php?id=<?= $rm['id']?>">Voir profil</a>
                     </div>

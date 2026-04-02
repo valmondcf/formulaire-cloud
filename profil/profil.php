@@ -38,6 +38,15 @@
         $role = "Inconnu";
         break;
     }
+
+    $chemin_avatar = null;
+
+    if(!empty($req_user['avatar'])){
+        $chemin_avatar = '/public/pp/' . $_SESSION['id'] . '/'  . $_SESSION['avatar'];
+
+    }else{
+        $chemin_avatar = '/public/pp/defaut/defaut.png';
+    }
 ?>
 
     <html>
@@ -46,6 +55,7 @@
             require_once('../head/link.php');
         ?>
         <title>Profil de <?= $req_user['name'] ?></title>
+        <link rel="stylesheet" href="/css/profil.css">
     </head>
     <body>
         <?php
@@ -55,6 +65,9 @@
             <div class="row">
                 <div class="col-12">
                     <h1>Bonjour <?= $req_user['name'] ?></h1>
+                    <div>
+                        <img src="<?= $chemin_avatar ?>" class ="profil_pp"/>
+                    </div>
                     <div>
                         Date d'inscription : Le <?= $date_inscription ?>
                     </div>
@@ -66,6 +79,9 @@
                     </div>
                     <div>
                         <a href="/profil/edit-profil.php">Modifier le compte</a>
+                    </div>
+                    <div>
+                        <a href="/profil/pp.php">Changer d'avatar</a>
                     </div>
                 </div>
             </div>

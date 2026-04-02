@@ -42,6 +42,11 @@ services:
     networks:
       - my_network
     restart: unless-stopped
+    command: >
+      bash -c "mkdir -p /var/www/html/public/pp
+      && chown -R www-data:www-data /var/www/html/public/pp
+      && chmod -R 775 /var/www/html/public/pp
+      && apache2-foreground"
 
   phpmyadmin:
     image: phpmyadmin:latest

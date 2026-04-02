@@ -47,6 +47,14 @@
         $role = "Inconnu";
         break;
     }
+
+    $chemin_avatar = null;
+
+    if(!empty($req_user['avatar'])){
+        $chemin_avatar = '/public/pp/' . $req_user['id'] . '/'  . $req_user['avatar'];
+    }else{
+        $chemin_avatar = '/public/pp/defaut/defaut.png';
+    }
 ?>
 
     <html>
@@ -63,7 +71,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h1>Bonjour <?= $req_user['name'] ?></h1>
+                    <h1>Profil de <?= $req_user['name'] ?></h1>
+                    <div>
+                        <img src="<?= $chemin_avatar ?>" class ="profil_pp"/>
+                    </div>
                     <div>
                         Date d'inscription : Le <?= $date_inscription ?>
                     </div>

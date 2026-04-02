@@ -32,6 +32,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 $_SESSION['name'] = $row['name'];
                 $_SESSION['mail'] = $row['mail'];
                 $_SESSION['role'] = $row['role'];
+                $_SESSION['avatar'] = $row['avatar'];
 
                 header('Location: ./index.php');
                 exit();
