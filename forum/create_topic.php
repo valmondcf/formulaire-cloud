@@ -81,11 +81,11 @@ if(!empty($_POST)){
 
     <html>
     <head>
-        <link rel="stylesheet" href="./style_login.css">
         <?php
             require_once('../head/link.php');
         ?>
         <title>Créer une topic</title>
+        <link rel="stylesheet" href="/css/create_topic.css">
     </head>
     <body>
         <?php

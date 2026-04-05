@@ -37,20 +37,33 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 16px;
 }
 
 .col-3 {
     display: none;
 }
 
-.col-6 {
+/* TITRE PAGE */
+.col-12 {
     width: 100%;
-    max-width: 720px;
-    margin-bottom: 20px;
 }
 
-/* TITRE DU TOPIC */
-.col-6 h1:first-of-type {
+.col-12 h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.2rem;
+    color: #ffe600;
+    text-align: center;
+    text-shadow: 0 0 20px rgba(255, 230, 0, 0.4);
+    background: linear-gradient(135deg, #6a0dad, #ff2d78);
+    padding: 16px 0;
+    border-radius: 14px;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+/* TITRE LISTE TOPICS (col-6) */
+.col-6 h1 {
     font-family: 'Fredoka One', cursive;
     font-size: 2rem;
     color: #ffe600;
@@ -60,105 +73,47 @@ body {
     padding: 16px 24px;
     border-radius: 14px;
     margin-bottom: 24px;
-}
-
-/* TITRE COMMENTAIRES */
-h1 {
-    font-family: 'Fredoka One', cursive;
-    font-size: 1.6rem;
-    color: #00e5cc;
-    margin-bottom: 16px;
-}
-
-/* BLOC TOPIC ET COMMENTAIRES */
-.topic-bloc {
-    background: rgba(10, 0, 30, 0.88);
-    border: 1px solid rgba(106, 13, 173, 0.5);
-    border-radius: 14px;
-    padding: 20px 24px;
-    margin-bottom: 16px;
-    position: relative;
-}
-
-.topic-bloc::after {
-    content: "";
-    display: block;
     width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, #6a0dad, #ff2d78, #6a0dad, transparent);
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: 14px 14px 0 0;
 }
 
-.topic-contenu {
-    color: #fff8f0;
+.col-6 {
+    width: 100%;
+    max-width: 720px;
+}
+
+/* BOUTON CRÉER TOPIC */
+.row > div > a {
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
     font-size: 15px;
-    line-height: 1.6;
-    margin-bottom: 16px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid rgba(106, 13, 173, 0.3);
+    background: linear-gradient(135deg, #6a0dad, #ff2d78);
+    border-radius: 10px;
+    padding: 12px 28px;
+    transition: opacity 0.2s, transform 0.1s;
+    margin-bottom: 8px;
 }
 
-.topic-meta {
-    display: flex;
-    align-items: center;
-    gap: 14px;
+.row > div > a:hover {
+    opacity: 0.85;
+    transform: scale(1.02);
+    color: white;
 }
 
-.meta-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #ffe600;
-    flex-shrink: 0;
-}
-
-.topic-meta > div {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-}
-
-.meta-auteur {
-    color: #ffe600;
-    font-weight: 700;
-    font-size: 14px;
-}
-
-.meta-info {
-    color: #aaa;
-    font-size: 12px;
-}
-
-/* ACTIONS (supprimer, éditer) */
-.topic-actions {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-}
-
-.topic-actions form {
-    margin: 0;
-    background: none;
-    border: none;
-    padding: 0;
-}
-
-/* FORMULAIRE COMMENTAIRE */
-.form-commentaire {
+/* CARTE SALON (forum.php) */
+.col-3-salon {
     background: rgba(10, 0, 30, 0.88);
-    border: 1px solid rgba(106, 13, 173, 0.5);
-    border-radius: 14px;
-    padding: 20px 24px;
-    margin-bottom: 16px;
+    border: 2px solid #6a0dad;
+    border-radius: 16px;
+    padding: 24px 28px;
+    width: 100%;
+    max-width: 720px;
     position: relative;
+    transition: border-color 0.2s, transform 0.2s;
 }
 
-.form-commentaire::after {
+.col-3-salon::after {
     content: "";
     display: block;
     width: 100%;
@@ -167,53 +122,70 @@ h1 {
     position: absolute;
     top: 0;
     left: 0;
-    border-radius: 14px 14px 0 0;
+    border-radius: 16px 16px 0 0;
 }
 
-label {
-    color: #00e5cc;
-    font-size: 14px;
-    font-weight: 700;
-    display: block;
-    margin-bottom: 8px;
-    letter-spacing: 1px;
+.col-3-salon:hover {
+    border-color: #ff2d78;
+    transform: scale(1.01);
 }
 
-textarea {
+.salon-titre {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3rem;
+    color: #ffe600;
+    margin-bottom: 14px;
+    text-shadow: 0 0 8px rgba(255, 230, 0, 0.3);
+}
+
+.salon-titre::before {
+    content: "★ ";
+    color: #ff2d78;
+}
+
+.salon-titre::after {
+    content: " ★";
+    color: #ff2d78;
+}
+
+/* CARTE TOPIC (liste-topics.php) */
+.topic-item {
+    background: rgba(10, 0, 30, 0.88);
+    border: 1px solid rgba(106, 13, 173, 0.5);
+    border-radius: 14px;
+    padding: 18px 24px;
     width: 100%;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(106, 13, 173, 0.6);
-    border-radius: 10px;
-    padding: 12px 16px;
-    color: #fff8f0;
-    font-family: 'Nunito', sans-serif;
-    font-size: 14px;
-    min-height: 100px;
-    resize: vertical;
-    outline: none;
+    max-width: 720px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     transition: border-color 0.2s;
 }
 
-textarea:focus {
+.topic-item::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #6a0dad, #ff2d78, #6a0dad, transparent);
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 14px 14px 0 0;
+}
+
+.topic-item:hover {
     border-color: #ff2d78;
 }
 
-textarea::placeholder {
-    color: rgba(255, 248, 240, 0.3);
+.topic-item-titre {
+    font-weight: 700;
+    font-size: 15px;
+    color: #fff8f0;
 }
 
-/* ERREURS */
-.err {
-    background: rgba(255, 45, 120, 0.15);
-    border: 1px solid #ff2d78;
-    border-radius: 8px;
-    color: #ff2d78;
-    padding: 10px 14px;
-    font-size: 13px;
-    margin-bottom: 12px;
-}
-
-/* BOUTONS */
+/* BOUTONS LIENS */
 .btn-tadc {
     display: inline-block;
     color: white;
@@ -227,14 +199,11 @@ textarea::placeholder {
     cursor: pointer;
     font-family: 'Nunito', sans-serif;
     transition: opacity 0.2s, transform 0.1s;
+    white-space: nowrap;
 }
 
 .btn-tadc:hover {
     opacity: 0.85;
     transform: scale(1.02);
     color: white;
-}
-
-.btn-danger {
-    background: linear-gradient(135deg, #8b0000, #ff2d78);
 }

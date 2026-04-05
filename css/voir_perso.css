@@ -1,4 +1,23 @@
-  body { color: #fff8f0; }
+ body {
+    background-image: url("/media/night.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+ }
+
+ .navbar {
+    background-color: rgba(80, 0, 120, 0.5) !important;
+}
+
+.navbar .nav-link {
+    color: white !important;
+}
+
+.navbar .nav-link:hover {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
 
   .perso-header {
     background: linear-gradient(135deg, rgba(106,13,173,0.4), rgba(10,0,26,0.9));
@@ -63,8 +82,8 @@
     font-style: italic; font-size: 16px;
     color: #ffe600;
   }
-  .quote-block::before { content: '"'; font-size: 36px; line-height: 0; vertical-align: -12px; margin-right: 4px; opacity: 0.5; }
-  .quote-block::after  { content: '"'; font-size: 36px; line-height: 0; vertical-align: -12px; margin-left:  4px; opacity: 0.5; }
+  .quote-block::before { content: '"'; font-size: 36px; line-height: 0; vertical-align: -12px; margin-right: 4px; }
+  .quote-block::after  { content: '"'; font-size: 36px; line-height: 0; vertical-align: -12px; margin-left:  4px; }
 
   .theory-block {
     background: rgba(0,229,204,0.07);

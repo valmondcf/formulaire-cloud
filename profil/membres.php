@@ -27,6 +27,7 @@
             require_once('../head/link.php');
         ?>
         <title>Membres du forum</title>
+        <link rel="stylesheet" href="/css/membres.css">
     </head>
     <body>
         <?php

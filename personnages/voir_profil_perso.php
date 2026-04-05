@@ -2,14 +2,12 @@
 session_start();
 require "../init-db/db.php";
 
-// Récupérer et valider l'id
 $get_id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 if ($get_id <= 0) {
     header('Location: /personnages/personnages.php');
     exit;
 }
 
-// Infos principales (table characters)
 $req = $pdo->prepare("SELECT * FROM characters WHERE id = ?");
 $req->execute([$get_id]);
 $perso = $req->fetch();
@@ -19,12 +17,10 @@ if (!$perso) {
     exit;
 }
 
-// Détails supplémentaires (table character_details)
 $req2 = $pdo->prepare("SELECT * FROM character_details WHERE character_id = ?");
 $req2->execute([$get_id]);
 $details = $req2->fetch();
 
-// Personnage précédent / suivant pour navigation
 $req_nav = $pdo->prepare("SELECT id, name FROM characters WHERE id != ? ORDER BY id");
 $req_nav->execute([$get_id]);
 $tous = $req_nav->fetchAll();
@@ -45,7 +41,6 @@ foreach ($tous as $i => $t) {
 
 <div class="container mt-4 mb-5">
 
-  <!-- Header personnage -->
   <div class="perso-header">
     <div class="d-flex align-items-center gap-4 flex-wrap">
       <?php if (!empty($perso['avatar_url'])): ?>
@@ -64,10 +59,7 @@ foreach ($tous as $i => $t) {
 
   <div class="row g-3">
 
-    <!-- Colonne gauche -->
     <div class="col-12 col-md-6">
-
-      <!-- Infos de base -->
       <div class="info-block">
         <h5>✦ Informations</h5>
         <div class="info-row">
@@ -91,7 +83,6 @@ foreach ($tous as $i => $t) {
       </div>
 
       <?php if ($details && !empty($details['personality'])): ?>
-      <!-- Personnalité -->
       <div class="info-block">
         <h5>✦ Personnalité</h5>
         <div class="info-value" style="font-size:14px;line-height:1.65">
@@ -101,7 +92,6 @@ foreach ($tous as $i => $t) {
       <?php endif; ?>
 
       <?php if ($details && !empty($details['abilities'])): ?>
-      <!-- Capacités -->
       <div class="info-block">
         <h5>✦ Capacités</h5>
         <div class="info-value" style="font-size:14px;line-height:1.65">
@@ -112,18 +102,15 @@ foreach ($tous as $i => $t) {
 
     </div>
 
-    <!-- Colonne droite -->
     <div class="col-12 col-md-6">
 
       <?php if ($details && !empty($details['quote'])): ?>
-      <!-- Citation -->
       <div class="quote-block">
         <?= htmlspecialchars($details['quote']) ?>
       </div>
       <?php endif; ?>
 
       <?php if ($details && !empty($details['relationships'])): ?>
-      <!-- Relations -->
       <div class="info-block">
         <h5>✦ Relations</h5>
         <div class="info-value" style="font-size:14px;line-height:1.65">
@@ -133,7 +120,6 @@ foreach ($tous as $i => $t) {
       <?php endif; ?>
 
       <?php if ($details && !empty($details['trivia'])): ?>
-      <!-- Anecdotes -->
       <div class="info-block">
         <h5>✦ Le saviez-vous ?</h5>
         <div class="info-value" style="font-size:14px;line-height:1.65">
@@ -143,7 +129,6 @@ foreach ($tous as $i => $t) {
       <?php endif; ?>
 
       <?php if ($details && !empty($details['theories'])): ?>
-      <!-- Théories -->
       <div class="theory-block">
         <?= htmlspecialchars($details['theories']) ?>
       </div>
@@ -152,10 +137,9 @@ foreach ($tous as $i => $t) {
     </div>
   </div>
 
-  <!-- Navigation -->
   <div class="nav-perso">
     <?php if ($prev): ?>
-      <a href="/personnages/voir_personnage.php?id=<?= $prev['id'] ?>" class="btn-nav">
+      <a href="/personnages/voir_profil_perso.php?id=<?= $prev['id'] ?>" class="btn-nav">
         ← <?= htmlspecialchars($prev['name']) ?>
       </a>
     <?php else: ?>
@@ -165,7 +149,7 @@ foreach ($tous as $i => $t) {
     <a href="/personnages/personnages.php" class="btn-retour">★ Tous les personnages</a>
 
     <?php if ($next): ?>
-      <a href="/personnages/voir_personnage.php?id=<?= $next['id'] ?>" class="btn-nav">
+      <a href="/personnages/voir_profil_perso.php?id=<?= $next['id'] ?>" class="btn-nav">
         <?= htmlspecialchars($next['name']) ?> →
       </a>
     <?php else: ?>

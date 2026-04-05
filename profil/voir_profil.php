@@ -63,6 +63,7 @@
             require_once('../head/link.php');
         ?>
         <title>Profil de <?= $req_user['name'] ?></title>
+        <link rel="stylesheet" href="/css/profil.css">
     </head>
     <body>
         <?php

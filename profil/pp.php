@@ -54,6 +54,7 @@ if(!empty($_POST)){
             require_once('../head/link.php');
         ?>
         <title>Changer d'avatar</title>
+        <link rel="stylesheet" href="/css/edit-profil.css">
     </head>
     <body>
         <?php

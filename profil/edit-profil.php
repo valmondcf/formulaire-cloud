@@ -127,6 +127,7 @@
             require_once('../head/link.php');
         ?>
         <title>Modifier le compte</title>
+        <link rel="stylesheet" href="/css/edit-profil.css">
     </head>
     <body>
         <?php

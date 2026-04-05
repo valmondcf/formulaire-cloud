@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url("/media/circus.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    background-color: rgba(80, 0, 120, 0.5) !important;
+}
+
+.navbar .nav-link {
+    color: white !important;
+}
+
+.navbar .nav-link:hover {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* BOITE PRINCIPALE */
+.box {
+    max-width: 680px;
+    width: 90%;
+    margin: 40px auto 60px;
+    background: rgba(10, 0, 30, 0.88);
+    border: 2px solid #6a0dad;
+    border-radius: 20px;
+    padding: 40px 48px;
+    position: relative;
+}
+
+.box::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #6a0dad, #ff2d78, #6a0dad, transparent);
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 20px 20px 0 0;
+}
+
+/* TITRE */
+.box h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    color: #ffe600;
+    text-align: center;
+    text-shadow: 0 0 20px rgba(255, 230, 0, 0.4);
+    background: linear-gradient(135deg, #6a0dad, #ff2d78);
+    padding: 14px 24px;
+    border-radius: 12px;
+    margin-bottom: 32px;
+}
+
+/* LABELS */
+label {
+    color: #00e5cc;
+    font-size: 14px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* INPUTS */
+input[type="text"] {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(106, 13, 173, 0.6);
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: #fff8f0;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 20px;
+}
+
+input[type="text"]:focus {
+    border-color: #ff2d78;
+}
+
+input[type="text"]::placeholder {
+    color: rgba(255, 248, 240, 0.3);
+}
+
+/* SELECT */
+select {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(106, 13, 173, 0.6);
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: #fff8f0;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 20px;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23ffe600' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+}
+
+select:focus {
+    border-color: #ff2d78;
+}
+
+select option {
+    background: #1a0040;
+    color: #fff8f0;
+}
+
+/* TEXTAREA */
+textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(106, 13, 173, 0.6);
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: #fff8f0;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    min-height: 160px;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 24px;
+}
+
+textarea:focus {
+    border-color: #ff2d78;
+}
+
+textarea::placeholder {
+    color: rgba(255, 248, 240, 0.3);
+}
+
+/* BOUTON SUBMIT */
+button[type="submit"] {
+    width: 100%;
+    background: linear-gradient(135deg, #6a0dad, #ff2d78);
+    border: none;
+    border-radius: 10px;
+    padding: 14px 24px;
+    color: white;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: opacity 0.2s, transform 0.1s;
+}
+
+button[type="submit"]:hover {
+    opacity: 0.85;
+    transform: scale(1.01);
+}
+
+/* ERREURS */
+.box > div {
+    background: rgba(255, 45, 120, 0.15);
+    border: 1px solid #ff2d78;
+    border-radius: 8px;
+    color: #ff2d78;
+    padding: 10px 14px;
+    font-size: 13px;
+    margin-bottom: 12px;
+}

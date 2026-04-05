@@ -65,23 +65,17 @@
             <div class="row">
                 <div class="col-12">
                     <h1>Bonjour <?= $req_user['name'] ?></h1>
-                    <div>
-                        <img src="<?= $chemin_avatar ?>" class ="profil_pp"/>
+                    <div class="avatar-bloc">
+                        <img src="<?= $chemin_avatar ?>" class="profil_pp"/>
+                        <a href="/profil/pp.php" class="btn-avatar">Changer d'avatar</a>
                     </div>
+
+                    <div class="info-bloc">Date d'inscription : Le <?= $date_inscription ?></div>
+                    <div class="info-bloc">Dernière connexion : <?= $date_connexion ?></div>
+                    <div class="info-bloc">Rôle utilisateur : <?= $role ?></div>
+
                     <div>
-                        Date d'inscription : Le <?= $date_inscription ?>
-                    </div>
-                    <div>
-                        Dernière connexion : <?= $date_connexion ?>
-                    </div>
-                    <div>
-                        Rôle utilisateur : <?= $role ?>
-                    </div>
-                    <div>
-                        <a href="/profil/edit-profil.php">Modifier le compte</a>
-                    </div>
-                    <div>
-                        <a href="/profil/pp.php">Changer d'avatar</a>
+                        <a href="/profil/edit-profil.php" class="btn-modifier">Modifier le compte</a>
                     </div>
                 </div>
             </div>

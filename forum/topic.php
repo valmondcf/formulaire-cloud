@@ -14,7 +14,11 @@ if($get_id_topic <= 0){
     exit;
 }
 
-$requete = $pdo->prepare("SELECT t.*, u.name, f.titre AS titre_forum FROM topic t INNER JOIN users u ON u.id = t.id_users INNER JOIN forum f ON f.id = t.id_forum WHERE t.id = ? ORDER BY t.date_creation DESC");
+$requete = $pdo->prepare("SELECT t.*, u.name, u.avatar, f.titre AS titre_forum 
+    FROM topic t 
+    INNER JOIN users u ON u.id = t.id_users 
+    INNER JOIN forum f ON f.id = t.id_forum 
+    WHERE t.id = ?");
 $requete->execute([$get_id_topic]);
 $req_topic = $requete->fetch();
 
@@ -23,7 +27,11 @@ if(!isset($req_topic['id'])){
     exit;
 }
 
-$req = $pdo->prepare("SELECT tc.*, u.name FROM topic_commentaire tc INNER JOIN users u ON u.id = tc.id_users WHERE tc.id_topic = ? ORDER BY tc.date_creation DESC");
+$req = $pdo->prepare("SELECT tc.*, u.name, u.avatar 
+    FROM topic_commentaire tc 
+    INNER JOIN users u ON u.id = tc.id_users 
+    WHERE tc.id_topic = ? 
+    ORDER BY tc.date_creation DESC");
 $req->execute([$req_topic['id']]);
 $req_topic_commentaire = $req->fetchAll();
 
@@ -39,7 +47,7 @@ if(!empty($_POST)){
             $err_commentaire = "Ce champ ne peut pas être vide";
         } elseif(mb_strlen($commentaire) < 3){
             $valid = false;
-            $err_commentaire = "Le titre doit faire plus de 5 caractères";
+            $err_commentaire = "Le commentaire doit faire plus de 3 caractères";
         }
 
         if($valid && isset($_SESSION['id'])){
@@ -81,10 +89,8 @@ if(!empty($_POST)){
         }
 
         if($valid && isset($_SESSION['id'])){
-
             $req = $pdo->prepare("DELETE FROM topic_commentaire WHERE id_topic = ?");
             $req->execute([$req_topic['id']]);
-
             $req = $pdo->prepare("DELETE FROM topic WHERE id = ?");
             $req->execute([$req_topic['id']]);
             header('Location: /forum/forum.php');
@@ -92,12 +98,19 @@ if(!empty($_POST)){
         }
     }
 }
+
+function getAvatar($id_user, $avatar) {
+    if(!empty($avatar)){
+        return '/public/pp/' . $id_user . '/' . $avatar;
+    }
+    return '/public/pp/defaut/defaut.png';
+}
 ?>
 
 <html>
 <head>
     <?php require_once('../head/link.php'); ?>
-    <title><?= $req_topic['titre'] ?></title>
+    <title><?= htmlspecialchars($req_topic['titre']) ?></title>
     <link rel="stylesheet" href="/css/forum.css">
 </head>
 <body>
@@ -107,88 +120,91 @@ if(!empty($_POST)){
 
             <div class="col-3"></div>
             <div class="col-6">
-                <h1><?= $req_topic['titre'] ?></h1>
+                <h1><?= htmlspecialchars($req_topic['titre']) ?></h1>
             </div>
             <div class="col-3"></div>
 
             <div class="col-3"></div>
             <div class="col-6">
-                <?php if(isset($err_topic)){ echo '<div>' . $err_topic . '</div>'; } ?>
+
+                <?php if(isset($err_topic)): ?>
+                    <div class="err"><?= $err_topic ?></div>
+                <?php endif; ?>
 
                 <?php if(isset($_SESSION['id']) && $_SESSION['id'] == $req_topic['id_users']): ?>
-                <div>
+                <div class="topic-actions">
                     <form method="post">
-                        <div class="mb-3">
-                            <input type="submit" name="supp_topic" value="Supprimer mon topic" class="btn btn-primary" />
-                        </div>
+                        <button type="submit" name="supp_topic" class="btn-tadc btn-danger">Supprimer le topic</button>
                     </form>
-                </div>
-                <div>
-                    <a href="/forum/editer_topic.php?id=<?= $req_topic['id'] ?>">Éditer mon topic</a>
+                    <a href="/forum/editer_topic.php?id=<?= $req_topic['id'] ?>" class="btn-tadc">Éditer le topic</a>
                 </div>
                 <?php endif; ?>
 
-                <br><br>
-                <div><?= nl2br($req_topic['contenu']) ?></div>
-                <br>
-                <div>Écrit par <?= $req_topic['name'] ?></div>
-                <div>Catégorie : <?= $req_topic['titre_forum'] ?></div>
-                <div>Le <?= date_format(date_create($req_topic['date_creation']), "d/m/Y à H:i") ?></div>
+                <div class="topic-bloc">
+                    <div class="topic-contenu"><?= nl2br(htmlspecialchars($req_topic['contenu'])) ?></div>
+                    <div class="topic-meta">
+                        <img src="<?= getAvatar($req_topic['id_users'], $req_topic['avatar']) ?>" class="meta-avatar" alt="avatar">
+                        <div>
+                            <span class="meta-auteur">Écrit par <?= htmlspecialchars($req_topic['name']) ?></span>
+                            <span class="meta-info">Catégorie : <?= htmlspecialchars($req_topic['titre_forum']) ?></span>
+                            <span class="meta-info">Le <?= date_format(date_create($req_topic['date_creation']), "d/m/Y à H:i") ?></span>
+                            <?php if($req_topic['date_creation'] < $req_topic['date_modification']): ?>
+                                <span class="meta-info">Modifié le <?= date_format(date_create($req_topic['date_modification']), "d/m/Y à H:i") ?></span>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
 
-                <?php if($req_topic['date_creation'] < $req_topic['date_modification']): ?>
-                <div>Modifié le <?= date_format(date_create($req_topic['date_modification']), "d/m/Y à H:i") ?></div>
-                <?php endif; ?>
             </div>
             <div class="col-3"></div>
 
             <div class="col-3"></div>
             <div class="col-6">
-                <br>
                 <h1>Commentaires</h1>
-                <br>
-                <form method="post">
-                    <div class="mb-3">
-                        <?php if(isset($err_commentaire)){ echo '<div>' . $err_commentaire . '</div>'; } ?>
-                        <label>Votre commentaire</label>
-                        <textarea name="commentaire" placeholder="Votre commentaire..."><?php if(isset($commentaire)){ echo $commentaire; } ?></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <button type="submit" name="poster" class="btn btn-primary">Poster</button>
-                    </div>
-                </form>
-            </div>
-            <div class="col-3"></div>
 
-            <?php foreach($req_topic_commentaire as $rtc): ?>
-            <div class="col-3"></div>
-            <div class="col-6">
-                <br>
-                <div><?= nl2br($rtc['contenu']) ?></div>
-                <br>
-                <div>Écrit par <?= $rtc['name'] ?></div>
-
-                <?php if(isset($_SESSION['id']) && $_SESSION['id'] == $rtc['id_users']): ?>
-                <div>
+                <div class="form-commentaire">
                     <form method="post">
                         <div class="mb-3">
-                            <input type="submit" name="supp_com" value="Supprimer mon commentaire" class="btn btn-primary" />
-                            <input type="hidden" name="id_com" value="<?= $rtc['id'] ?>" />
+                            <?php if(isset($err_commentaire)): ?>
+                                <div class="err"><?= $err_commentaire ?></div>
+                            <?php endif; ?>
+                            <label>Votre commentaire</label>
+                            <textarea name="commentaire" placeholder="Votre commentaire..."><?php if(isset($commentaire)){ echo htmlspecialchars($commentaire); } ?></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" name="poster" class="btn-tadc">Poster</button>
                         </div>
                     </form>
                 </div>
-                <div>
-                    <a href="/forum/editer_commentaire.php?id=<?= $rtc['id'] ?>">Éditer mon commentaire</a>
+
+                <?php foreach($req_topic_commentaire as $rtc): ?>
+                <div class="topic-bloc">
+                    <div class="topic-contenu"><?= nl2br(htmlspecialchars($rtc['contenu'])) ?></div>
+                    <div class="topic-meta">
+                        <img src="<?= getAvatar($rtc['id_users'], $rtc['avatar']) ?>" class="meta-avatar" alt="avatar">
+                        <div>
+                            <span class="meta-auteur">Écrit par <?= htmlspecialchars($rtc['name']) ?></span>
+                            <span class="meta-info">Le <?= date_format(date_create($rtc['date_creation']), "d/m/Y à H:i") ?></span>
+                            <?php if($rtc['date_creation'] < $rtc['date_modification']): ?>
+                                <span class="meta-info">Modifié le <?= date_format(date_create($rtc['date_modification']), "d/m/Y à H:i") ?></span>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                    <?php if(isset($_SESSION['id']) && $_SESSION['id'] == $rtc['id_users']): ?>
+                    <div class="topic-actions" style="margin-top: 14px;">
+                        <form method="post">
+                            <button type="submit" name="supp_com" class="btn-tadc btn-danger">Supprimer</button>
+                            <input type="hidden" name="id_com" value="<?= $rtc['id'] ?>" />
+                        </form>
+                        <a href="/forum/editer_commentaire.php?id=<?= $rtc['id'] ?>" class="btn-tadc">Éditer</a>
+                    </div>
+                    <?php endif; ?>
                 </div>
-                <?php endif; ?>
+                <?php endforeach; ?>
 
-                <div>Le <?= date_format(date_create($rtc['date_creation']), "d/m/Y à H:i") ?></div>
-
-                <?php if($rtc['date_creation'] < $rtc['date_modification']): ?>
-                <div>Modifié le <?= date_format(date_create($rtc['date_modification']), "d/m/Y à H:i") ?></div>
-                <?php endif; ?>
             </div>
             <div class="col-3"></div>
-            <?php endforeach; ?>
 
         </div>
     </div>

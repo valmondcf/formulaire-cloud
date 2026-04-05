@@ -100,11 +100,11 @@ if(!empty($_POST)){
 
     <html>
     <head>
-        <link rel="stylesheet" href="./style_login.css">
         <?php
             require_once('../head/link.php');
         ?>
         <title>Éditer mon topic</title>
+        <link rel="stylesheet" href="/media/create_topic.css">
     </head>
     <body>
         <?php
