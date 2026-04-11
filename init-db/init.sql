@@ -99,3 +99,10 @@ CREATE TABLE annonces (
         REFERENCES users(id)
         ON DELETE CASCADE
 );
+
+CREATE TABLE roles (
+    id INT NOT NULL AUTO_INCREMENT,
+    role INT NOT NULL,
+    libelle VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    PRIMARY KEY (id)
+);

@@ -19,6 +19,13 @@
                         ?>
                         <a class="nav-link active" aria-current="page" href="/">Accueil</a>
                         <a class="nav-link" href="/profil/profil.php">Mon Profil</a>
+                        <?php
+                            if(in_array($_SESSION['role'], [1,2,3])){ 
+                        ?>
+                        <a class="nav-link" href="/admin/accueil.php">Admin</a>
+                        <?php
+                            }
+                        ?>
                         <a class="nav-link" href="/forum/forum.php">Forum</a>
                         <a class="nav-link" href="/personnages/personnages.php">Personnages</a>
                         <a class="nav-link" href="/profil/membres.php">Membres du forum</a>
