@@ -1,5 +1,5 @@
 <?php
- 
+session_start();
 require "../init-db/db.php"; 
 
 if(isset($_SESSION['id'])){
@@ -101,41 +101,41 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         <link rel="stylesheet" href="/css/style_login.css">
     </head>
     <body>
-    <div class="box">
-        <form method="post">
-            <h1>CRÉATION DU COMPTE</h1>
-            <label>nom</label>
-            <br/>
-            <?php if(isset($err_name)){ echo '<div>' . $err_name . '</div>'; }?>
-            <input type="text" name="name" value="<?php if(isset($name)){ echo $name; }?>" placeholder="Entrez votre nom..."/>
-            <br/>
-            <br/>
-            <label>mail</label>
-            <br/>
-            <?php if(isset($err_mail)){ echo '<div>' . $err_mail . '</div>'; }?>
-            <input type="email" name="mail" value="<?php if(isset($mail)){ echo $mail; }?>" placeholder="Entrez votre mail..."/>
-            <br/>
-            <br/>
-            <label>Confirmation du mail</label>
-            <br/>
-            <input type="email" name="confmail" value=""<?php if(isset($confmail)){ echo $confmail; }?>placeholder="Confirmez votre mail" required/>
-            <br/>
-            <br/>
-            <label>mot de passe</label>
-            <br/>
-            <?php if(isset($err_password)){ echo '<div>' . $err_password . '</div>'; }?>
-            <input type="password" name="password" value="<?php if(isset($password)){ echo $password; }?>" placeholder="Entrez votre mot de passe..." />
-            <br/>
-            <br/>
-            <label>Confirmation du mdp</label>
-            <br/>
-            <input type="password" name="confpass" value="" placeholder="Confirmez votre mot de passe" />
-            <br/>
-            <br/>
-            <a href="./connexion.php" class="button">j'ai déjà un compte</a>
-            <button type="submit">m'inscrire</button>
-        </form>
-    </div>
+        <div class="box">
+            <form method="post">
+                <h1>CRÉATION DU COMPTE</h1>
+                <label>nom</label>
+                <br/>
+                <?php if(isset($err_name)){ echo '<div>' . $err_name . '</div>'; }?>
+                <input type="text" name="name" value="<?php if(isset($name)){ echo $name; }?>" placeholder="Entrez votre nom..."/>
+                <br/>
+                <br/>
+                <label>mail</label>
+                <br/>
+                <?php if(isset($err_mail)){ echo '<div>' . $err_mail . '</div>'; }?>
+                <input type="email" name="mail" value="<?php if(isset($mail)){ echo $mail; }?>" placeholder="Entrez votre mail..."/>
+                <br/>
+                <br/>
+                <label>Confirmation du mail</label>
+                <br/>
+                <input type="email" name="confmail" value="<?php if(isset($confmail)){ echo $confmail; }?>"placeholder="Confirmez votre mail" required/>
+                <br/>
+                <br/>
+                <label>mot de passe</label>
+                <br/>
+                <?php if(isset($err_password)){ echo '<div>' . $err_password . '</div>'; }?>
+                <input type="password" name="password" value="<?php if(isset($password)){ echo $password; }?>" placeholder="Entrez votre mot de passe..." />
+                <br/>
+                <br/>
+                <label>Confirmation du mdp</label>
+                <br/>
+                <input type="password" name="confpass" value="" placeholder="Confirmez votre mot de passe" />
+                <br/>
+                <br/>
+                <a href="./connexion.php" class="button">j'ai déjà un compte</a>
+                <button type="submit">m'inscrire</button>
+            </form>
+        </div>
         <script src="/caine/caine.js"></script>
     </body>
 </html>

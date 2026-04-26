@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url("/media/bureau.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    font-family: 'Nunito', sans-serif;
+}
+
+.navbar {
+    background-color: rgba(80, 0, 120, 0.5) !important;
+}
+
+.navbar .nav-link {
+    color: white !important;
+}
+
+.navbar .nav-link:hover {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.container {
+    padding-top: 40px;
+    padding-bottom: 60px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+.col-12 {
+    width: 100%;
+    max-width: 720px;
+}
+
+/* TITRE */
+.col-12 > div:first-child {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    color: #ffe600;
+    text-align: center;
+    text-shadow: 0 0 20px rgba(255, 230, 0, 0.4);
+    background: linear-gradient(135deg, #6a0dad, #ff2d78);
+    padding: 16px 24px;
+    border-radius: 14px;
+    margin-bottom: 28px;
+}
+
+/* ERREUR */
+.alert-danger {
+    background: rgba(255, 45, 120, 0.15);
+    border: 1px solid #ff2d78;
+    border-radius: 8px;
+    color: #ff2d78;
+    padding: 10px 14px;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+/* CARTE USER */
+form {
+    background: rgba(10, 0, 30, 0.88);
+    border: 1px solid rgba(106, 13, 173, 0.5);
+    border-radius: 14px;
+    padding: 18px 24px;
+    margin-bottom: 14px;
+    position: relative;
+}
+
+form::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #6a0dad, #ff2d78, #6a0dad, transparent);
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 14px 14px 0 0;
+}
+
+form > div {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+/* NOM UTILISATEUR */
+form > div > div:first-child {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    color: #ffe600;
+    text-shadow: 0 0 8px rgba(255, 230, 0, 0.3);
+    min-width: 120px;
+}
+
+/* SELECT */
+select {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(106, 13, 173, 0.6);
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: #fff8f0;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23ffe600' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    min-width: 160px;
+}
+
+select:focus {
+    border-color: #ff2d78;
+}
+
+select option {
+    background: #1a0040;
+    color: #fff8f0;
+}
+
+/* BOUTON */
+button[type="submit"] {
+    background: linear-gradient(135deg, #6a0dad, #ff2d78);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.1s;
+}
+
+button[type="submit"]:hover {
+    opacity: 0.85;
+    transform: scale(1.02);
+}
+
+a {
+    display: block;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    background: linear-gradient(135deg, #6a0dad, #ff2d78);
+    border-radius: 8px;
+    padding: 10px 20px;
+    transition: opacity 0.2s, transform 0.1s;
+}

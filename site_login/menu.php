@@ -12,6 +12,7 @@
                         <?php
                             if(!isset($_SESSION['id'])){
                         ?>
+                        <a class="nav-link active" aria-current="page" href="/">Accueil</a>
                         <a class="nav-link" href="/site_login/inscription.php">Inscription</a>
                         <a class="nav-link" href="/site_login/connexion.php">Connexion</a>
                         <?php

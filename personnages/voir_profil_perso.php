@@ -1,6 +1,7 @@
 <?php
 session_start();
 require "../init-db/db.php";
+require "../init-db/auth.php";
 
 $get_id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 if ($get_id <= 0) {

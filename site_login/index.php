@@ -4,8 +4,7 @@ require "../init-db/db.php";
 if(isset($_SESSION['id'])) {
     $var = "Ravi de vous revoir, " . $_SESSION['name'] . " !";
 } else {
-    header("Location: /site_login/connexion.php");
-    exit;
+    $var = "Inscrivez vous pour découvrir le site dans son entièreté!";
 }
 
 $req_topics = $pdo->prepare("
@@ -17,7 +16,6 @@ $req_topics = $pdo->prepare("
 ");
 $req_topics->execute();
 $derniers_topics = $req_topics->fetchAll();
-
 
 $req_annonces = $pdo->prepare("
     SELECT a.titre, a.contenu, a.date_creation, u.name as auteur
@@ -42,14 +40,9 @@ $annonces = $req_annonces->fetchAll();
 <?php require_once('./menu.php'); ?>
 
 <div class="container">
-
-    <!-- TITRE -->
     <div class="welcome-title">★ Bienvenue dans le Cirque Digital ★</div>
     <div class="welcome-sub"><?= htmlspecialchars($var) ?></div>
-
     <div class="row">
-
-        <!-- ANNONCES -->
         <div class="col-12 col-md-6">
             <div class="section-box">
                 <div class="section-title">📢 Annonces du Cirque</div>
@@ -70,7 +63,6 @@ $annonces = $req_annonces->fetchAll();
             </div>
         </div>
 
-        <!-- DERNIERS TOPICS -->
         <div class="col-12 col-md-6">
             <div class="section-box">
                 <div class="section-title">💬 Derniers Topics</div>
@@ -79,9 +71,15 @@ $annonces = $req_annonces->fetchAll();
                 <?php else: ?>
                     <?php foreach($derniers_topics as $t): ?>
                         <div class="topic-item">
-                            <a href="/forum/topic.php?id=<?= $t['id'] ?>" class="topic-titre">
-                                <?= htmlspecialchars($t['titre']) ?>
-                            </a>
+                            <?php if(isset($_SESSION['id'])): ?>
+                                <a href="/forum/topic.php?id=<?= $t['id'] ?>" class="topic-titre">
+                                    <?= htmlspecialchars($t['titre']) ?>
+                                </a>
+                            <?php else: ?>
+                                <span class="topic-titre" style="cursor: not-allowed;">
+                                    <?= htmlspecialchars($t['titre']) ?>
+                                </span>
+                            <?php endif; ?>
                             <div class="topic-meta">
                                 <?= htmlspecialchars($t['auteur']) ?><br>
                                 <?= date('d/m/Y', strtotime($t['date_creation'])) ?>
@@ -92,24 +90,41 @@ $annonces = $req_annonces->fetchAll();
             </div>
         </div>
 
-        <!-- PORTES NAVIGATION -->
-    <div class="door-nav">
-        <a href="/personnages/personnages.php" class="door-nav-item">
-            <img src="/media/door_personnage.png" alt="Personnages">
-            <div class="door-nav-label">Personnages</div>
-            <span class="btn-voir">Découvrir </span>
-        </a>
-        <a href="/forum/forum.php" class="door-nav-item">
-            <img src="/media/door_forum.png" alt="Forum">
-            <div class="door-nav-label">Forum</div>
-            <span class="btn-voir">Découvrir </span>
-        </a>
-        <a href="/profil/profil.php" class="door-nav-item">
-            <img src="/media/door_profil.png" alt="Mon Profil">
-            <div class="door-nav-label">Mon Profil</div>
-            <span class="btn-voir">Découvrir </span>
-        </a>
-    </div>
+        <div class="door-nav">
+            <?php if(isset($_SESSION['id'])): ?>
+                <a href="/personnages/personnages.php" class="door-nav-item">
+                    <img src="/media/door_personnage.png" alt="Personnages">
+                    <div class="door-nav-label">Personnages</div>
+                    <span class="btn-voir">Découvrir </span>
+                </a>
+                <a href="/forum/forum.php" class="door-nav-item">
+                    <img src="/media/door_forum.png" alt="Forum">
+                    <div class="door-nav-label">Forum</div>
+                    <span class="btn-voir">Découvrir </span>
+                </a>
+                <a href="/profil/profil.php" class="door-nav-item">
+                    <img src="/media/door_profil.png" alt="Mon Profil">
+                    <div class="door-nav-label">Mon Profil</div>
+                    <span class="btn-voir">Découvrir </span>
+                </a>
+            <?php else: ?>
+                <div class="door-nav-item" style="cursor: not-allowed;">
+                    <img src="/media/door_personnage.png" alt="Personnages">
+                    <div class="door-nav-label">Personnages</div>
+                    <span class="btn-voir">Découvrir </span>
+                </div>
+                <div class="door-nav-item" style="cursor: not-allowed;">
+                    <img src="/media/door_forum.png" alt="Forum">
+                    <div class="door-nav-label">Forum</div>
+                    <span class="btn-voir">Découvrir </span>
+                </div>
+                <div class="door-nav-item" style="cursor: not-allowed;">
+                    <img src="/media/door_profil.png" alt="Mon Profil">
+                    <div class="door-nav-label">Mon Profil</div>
+                    <span class="btn-voir">Découvrir </span>
+                </div>
+            <?php endif; ?>
+        </div>
 
     </div>
 </div>

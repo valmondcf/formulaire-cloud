@@ -1,6 +1,7 @@
 <?php
 session_start();
 require "../init-db/db.php"; 
+require "../init-db/auth.php";
 $requete = $pdo->prepare("SELECT * FROM forum ORDER BY ordre");
 $requete->execute();
 $req_forum = $requete->fetchAll();

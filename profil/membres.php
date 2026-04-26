@@ -1,6 +1,7 @@
 <?php
     session_start();
     require "../init-db/db.php"; 
+    require "../init-db/auth.php";
 
     $req_sql = "SELECT id, name, avatar
         FROM users";

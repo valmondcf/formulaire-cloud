@@ -1,6 +1,7 @@
 <?php
 session_start();
 require "../init-db/db.php"; 
+require "../init-db/auth.php";
 
 if(!isset($_SESSION['id'])){
     header('Location: /');

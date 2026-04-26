@@ -1,6 +1,7 @@
 <?php
     session_start();
     require "../init-db/db.php";
+    require "../init-db/auth.php";
 
     if(!in_array($_SESSION['role'], [1,2,3])){
         header('Location: /');
@@ -11,6 +12,7 @@
 <html>
     <head>
         <title>Dashboard</title>
+        <link rel="stylesheet" href="/css/admin.css">
         <?php
             require_once('../head/link.php');
         ?>

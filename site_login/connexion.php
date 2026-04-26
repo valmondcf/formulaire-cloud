@@ -19,7 +19,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     }
 
     if($valid){
-        $req = $pdo->prepare("SELECT * FROM users WHERE name = ?");
+        $req = $pdo->prepare("SELECT u.*, ar.ordre role_ordre FROM users u INNER JOIN admin_role ar ON ar.role = u.role WHERE name = ?");
         $req->execute(array($name));
         $row = $req->fetch();
 
@@ -33,6 +33,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 $_SESSION['mail'] = $row['mail'];
                 $_SESSION['role'] = $row['role'];
                 $_SESSION['avatar'] = $row['avatar'];
+                $_SESSION['role_ordre'] = $row['role_ordre'];
 
                 header('Location: ./index.php');
                 exit();
